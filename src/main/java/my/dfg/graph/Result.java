@@ -15,6 +15,12 @@ public class Result
     private int value;
     private Map<String, Integer> notes;
     
+    public Result()
+    {
+        value = 0;
+        notes = new HashMap<>();
+    }
+    
     public Result(int value)
     {
         this.value = value;
@@ -38,5 +44,10 @@ public class Result
     public Integer getNote(String label)
     {
         return notes.get(label);
+    }
+    
+    public void clearNote(String label)
+    {
+        notes.remove(label);
     }
 }

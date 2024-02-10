@@ -20,5 +20,21 @@ public class ReadingNode extends Node
     public void setVariable(Variable newVariable)
     {
         variable = newVariable;
+        //variable.setReader(this);
+    }
+    
+    @Override
+    public Result getResult() throws Exception
+    {
+        Result result = null;
+        if (variable != null)
+        {
+            result = new Result(variable.getValue());
+        }
+        else
+        {
+            throw new Exception("A Reading Node's variable is null!");
+        }
+        return result;
     }
 }

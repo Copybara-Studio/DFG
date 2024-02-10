@@ -75,6 +75,9 @@ public class Expression
         // throw new Exception("Invalid input string!");
         
         // Jak coś, to pisz. ;)
+        
+        terms.add(new VariableTerm("R"));
+        terms.add(new VariableTerm("X"));
     }
     
     private static Term makeTerm(String text)
@@ -143,5 +146,15 @@ public class Expression
     public Term get()
     {
         return terms.poll();
+    }
+    
+    /**
+     * Returns the value of the first element without extracting it.
+     * 
+     * @return 
+     */
+    public Term front()
+    {
+        return terms.peek();
     }
 }

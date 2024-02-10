@@ -8,25 +8,28 @@ package my.dfg.graph;
  *
  * @author Kay Jay O'Nail
  */
-public class WritingNode extends Node
+public class ConstantNode extends Node
 {
-    Variable variable;
+    private int value;
+    private boolean initialized = false;
     
-    public WritingNode()
+    public ConstantNode()
     {
-        super(NodeOperation.WRITE);
+        super(NodeOperation.CONSTANT);
     }
     
-    public void setVariable(Variable newVariable)
+    public void initialize(int theValue)
     {
-        variable = newVariable;
-        //variable.setWriter(this);
+        if (!initialized)
+        {
+            value = theValue;
+            initialized = true;
+        }
     }
     
-    @Deprecated
     @Override
     public Result getResult() throws Exception
     {
-        return null;
+        return new Result(value);
     }
 }

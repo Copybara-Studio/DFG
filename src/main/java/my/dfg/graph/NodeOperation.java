@@ -10,19 +10,31 @@ package my.dfg.graph;
  */
 public enum NodeOperation
 {
-    READ,
-    WRITE,
-    CONSTANT,
+    READ(0),
+    WRITE(1),
+    CONSTANT(0),
     
-    SUM,
-    PRODUCT,
-    QUOTIENT,
+    SUM(2),
+    PRODUCT(2),
+    QUOTIENT(2),
     
-    CONJUNCTION,
-    DISJUNCTION,
+    CONJUNCTION(2),
+    DISJUNCTION(2),
     
-    EQUAL,
-    GREATER,
+    EQUAL(2),
+    GREATER(2),
     
-    SELECTION
+    SELECTION(2);
+    
+    private int demandedArguments;
+    
+    private NodeOperation(int args)
+    {
+        demandedArguments = args;
+    }
+    
+    public int getArgsCount()
+    {
+        return demandedArguments;
+    }
 }
