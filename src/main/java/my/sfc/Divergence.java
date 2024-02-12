@@ -12,6 +12,21 @@ import java.util.Collection;
  */
 public class Divergence
 {
-    private Step inputStep;
-    private Collection<Step> outputSteps;
+    private int id;
+    private int source;
+    //private Step inputStep;
+    //private Collection<Step> outputSteps;
+
+    public Divergence(int id, int source) {
+        this.id = id;
+        this.source = source;
+    }
+
+    @Override
+    public String toString() {
+        return "Divergence{" +
+                "id=" + id +
+                ", inputStep=" + source +
+                '}';
+    }
 }

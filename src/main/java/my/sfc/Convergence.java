@@ -4,6 +4,7 @@
  */
 package my.sfc;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -12,6 +13,21 @@ import java.util.Collection;
  */
 public class Convergence
 {
-    private Collection<Step> inputSteps;
-    private Step outputStep;
+    private int id;
+    private Collection<Integer> sources;
+    //private Collection<Step> inputSteps;
+    //private Step outputStep;
+
+    public Convergence(int id, Collection<Integer> sources) {
+        this.id = id;
+        this.sources = sources;
+    }
+
+    @Override
+    public String toString() {
+        return "Convergence{" +
+                "id=" + id +
+                ", inputSteps=" + sources +
+                '}';
+    }
 }
