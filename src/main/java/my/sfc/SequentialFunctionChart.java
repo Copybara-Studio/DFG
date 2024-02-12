@@ -18,9 +18,9 @@ import java.util.*;
 
 /**
  * Program in form of a Sequential Function Chart.
- * 
+ *
  * Definition 3.13., page 85.
- * 
+ *
  * @author Kay Jay O'Nail
  */
 public class SequentialFunctionChart
@@ -31,7 +31,8 @@ public class SequentialFunctionChart
     private Collection<Action> actions = new ArrayList<>();
     private Collection<Variable> vars = new ArrayList<>(); // you can treat it as a map -> variables in transitions
 
-    public void readFromXML(String fileName) throws ParserConfigurationException, IOException, SAXException {
+    public void readFromXML(String fileName) throws ParserConfigurationException, IOException, SAXException
+    {
         File file = new File(fileName);
         System.out.println("File path : " + file.getAbsolutePath());
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -39,40 +40,54 @@ public class SequentialFunctionChart
         Document document = builder.parse(file);
         document.getDocumentElement().normalize();
         NodeList nodeList = document.getElementsByTagName("variable");
-        for (int i = 0; i < nodeList.getLength(); i++) {
+        for (int i = 0; i < nodeList.getLength(); i++)
+        {
             addVarToSFC(nodeList.item(i));
         }
         nodeList = document.getElementsByTagName("step");
-        for (int i = 0; i < nodeList.getLength(); i++) {
+        for (int i = 0; i < nodeList.getLength(); i++)
+        {
             addStepToSFC(nodeList.item(i));
         }
         nodeList = document.getElementsByTagName("transition");
-        for (int i = 0; i < nodeList.getLength(); i++) {
+        for (int i = 0; i < nodeList.getLength(); i++)
+        {
             addTransitionToSFC(nodeList.item(i));
         }
     }
 
-    private void addTransitionToSFC(Node node) {
+    private void addTransitionToSFC(Node node)
+    {
         int id = Integer.parseInt(node.getAttributes().getNamedItem("localId").getNodeValue());
         String condition = "";
         int source = -1;
 
         NodeList transitionChildren = node.getChildNodes();
-        for (int j = 0; j < transitionChildren.getLength(); j++) {
+        for (int j = 0; j < transitionChildren.getLength(); j++)
+        {
             Node transitionChild = transitionChildren.item(j);
-            if (transitionChild.getNodeName().equals("connectionPointIn")) {
+            if (transitionChild.getNodeName().equals("connectionPointIn"))
+            {
                 NodeList connectionPointInChildren = transitionChild.getChildNodes();
-                for (int k = 0; k < connectionPointInChildren.getLength(); k++) {
-                    if (connectionPointInChildren.item(k).getNodeName().equals("refLocalId")) {
+                for (int k = 0; k < connectionPointInChildren.getLength(); k++)
+                {
+                    if (connectionPointInChildren.item(k).getNodeName().equals("refLocalId"))
+                    {
                         source = Integer.parseInt(connectionPointInChildren.item(k).getAttributes().getNamedItem("refLocalId").getNodeValue());
                     }
                 }
-            } else if (transitionChild.getNodeName().equals("condition")) {
+            }
+            else if (transitionChild.getNodeName().equals("condition"))
+            {
                 NodeList conditionChildren = transitionChild.getChildNodes();
-                for (int k = 0; k < conditionChildren.getLength(); k++) {
-                    if (conditionChildren.item(k).getNodeName().equals("inline")) {
-                        for (int l = 0; l < conditionChildren.item(k).getChildNodes().getLength(); l++) {
-                            if (conditionChildren.item(k).getChildNodes().item(l).getNodeName().equals("ST")) {
+                for (int k = 0; k < conditionChildren.getLength(); k++)
+                {
+                    if (conditionChildren.item(k).getNodeName().equals("inline"))
+                    {
+                        for (int l = 0; l < conditionChildren.item(k).getChildNodes().getLength(); l++)
+                        {
+                            if (conditionChildren.item(k).getChildNodes().item(l).getNodeName().equals("ST"))
+                            {
                                 condition = conditionChildren.item(k).getChildNodes().item(l).getTextContent().trim();
                                 System.out.println("DUPA123: " + condition.trim());
                             }
@@ -84,16 +99,18 @@ public class SequentialFunctionChart
         transitions.add(new Transition(id, condition, source));
     }
 
-    private void addStepToSFC(Node node) {
+    private void addStepToSFC(Node node)
+    {
         int id = Integer.parseInt(node.getAttributes().getNamedItem("localId").getNodeValue());
         String name = node.getAttributes().getNamedItem("name").getNodeValue();
         boolean initialStep = Boolean.parseBoolean(node.getAttributes().getNamedItem("initialStep").getNodeValue());
-
-        if (initialStep) {
-            startSteps.add(new Step(id, name, true));
+        
+        Step step = new Step(id, name, initialStep);
+        steps.add(step);
+        if (initialStep)
+        {
+            startSteps.add(step);
         }
-
-        steps.add(new Step(id, name, initialStep));
     }
 
     private void addVarToSFC(Node node)
@@ -104,19 +121,23 @@ public class SequentialFunctionChart
     public void printSFC()
     {
         System.out.println("Steps:");
-        for (Step step : steps) {
+        for (Step step : steps)
+        {
             System.out.println(step);
         }
         System.out.println("Start steps:");
-        for (Step step : startSteps) {
+        for (Step step : startSteps)
+        {
             System.out.println(step);
         }
         System.out.println("Transitions:");
-        for (Transition transition : transitions) {
+        for (Transition transition : transitions)
+        {
             System.out.println(transition);
         }
         System.out.println("Variables:");
-        for (Variable var : vars) {
+        for (Variable var : vars)
+        {
             System.out.println(var);
         }
     }

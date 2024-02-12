@@ -6,6 +6,7 @@ package my.dfg.graph;
 
 import java.util.*;
 import my.dfg.expression.*;
+import my.sfc.SequentialFunctionChart;
 
 class Element
 {
@@ -97,6 +98,12 @@ public class Graph
         stack.push(new Element(outputNode, NodeOperation.WRITE.getArgsCount()));
     }
     
+    public void createGraph(SequentialFunctionChart sfc)
+    {
+        
+    }
+    
+    @Deprecated
     public void createGraph(Expression expression) throws Exception
     {
         Stack<Element> stack = new Stack<>();

@@ -14,7 +14,8 @@ import java.util.ArrayList;
 
 import my.dfg.expression.*;
 
-public class Extractor {
+public class Extractor
+{
     /**
      * The name of the file to extract data from.
      */
@@ -25,22 +26,25 @@ public class Extractor {
      */
     ArrayList<Term> termsCollection = new ArrayList<>();
 
-
     /**
      * Constructor for the extractor class.
+     *
      * @param fileName The name of the file to extract data from.
      */
-    public Extractor(String fileName) {
+    public Extractor(String fileName)
+    {
         this.fileName = fileName;
     }
 
     /**
      * Extracts useful data from the file.
+     *
      * @throws ParserConfigurationException the parser configuration exception
      * @throws IOException the io exception
      * @throws SAXException the sax exception
      */
-    public void getTextFromFile() throws ParserConfigurationException, IOException, SAXException {
+    public void getTextFromFile() throws ParserConfigurationException, IOException, SAXException
+    {
         File file = new File(fileName);
 //        System.out.println("File path : " + file.getAbsolutePath());
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -48,7 +52,8 @@ public class Extractor {
         Document document = builder.parse(file);
         document.getDocumentElement().normalize();
         NodeList nodeList = document.getElementsByTagName("variable");
-        for (int i = 0; i < nodeList.getLength(); i++) {
+        for (int i = 0; i < nodeList.getLength(); i++)
+        {
             Node node = nodeList.item(i);
 //            System.out.println(node.getNodeName() + " with name: " + node.getAttributes().getNamedItem("name").getNodeValue());
             termsCollection.add(new VariableTerm(node.getAttributes().getNamedItem("name").getNodeValue()));
@@ -59,8 +64,10 @@ public class Extractor {
     /**
      * Prints the terms extracted from the file.
      */
-    public void printTerms() {
-        for (Term term : termsCollection) {
+    public void printTerms()
+    {
+        for (Term term : termsCollection)
+        {
             System.out.println(term.getType() + " with label: " + ((VariableTerm) term).getLabel());
         }
     }

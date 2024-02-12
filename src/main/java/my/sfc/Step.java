@@ -18,15 +18,15 @@ public class Step
 
     private int id;
     private String name;
-    private boolean initial_step;
+    private boolean initialStep;
     private boolean active;
     private Collection<Action> actions;
 
-    public Step(int id, String name, boolean initial_step)
+    public Step(int id, String name, boolean initialStep)
     {
         this.id = id;
         this.name = name;
-        this.initial_step = initial_step;
+        this.initialStep = initialStep;
         this.active = false;
     }
 
@@ -35,7 +35,7 @@ public class Step
         return "Step{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", initial_step=" + initial_step +
+                ", initial_step=" + initialStep +
                 ", active=" + active +
                 ", actions=" + actions +
                 '}';
