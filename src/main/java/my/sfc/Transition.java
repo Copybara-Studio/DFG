@@ -20,12 +20,12 @@ public class Transition
     private int source;
 //    private Collection<Step> inputSteps;
 //    private Collection<Step> outputSteps;
-    private boolean condition;
+    private String condition;
 
-    public Transition(int id, int source) {
+    public Transition(int id, String condition, int source) {
         this.id = id;
+        this.condition = condition;
         this.source = source;
-        this.condition = false;
     }
 
     @Override

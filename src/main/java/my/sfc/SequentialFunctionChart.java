@@ -29,7 +29,7 @@ public class SequentialFunctionChart
     private Collection<Step> startSteps = new ArrayList<>(); // subset of 'steps'!
     private Collection<Transition> transitions = new ArrayList<>();
     private Collection<Action> actions = new ArrayList<>();
-    private Collection<Variable> vars = new ArrayList<>();
+    private Collection<Variable> vars = new ArrayList<>(); // you can treat it as a map -> variables in transitions
 
     public void readFromXML(String fileName) throws ParserConfigurationException, IOException, SAXException {
         File file = new File(fileName);
@@ -54,6 +54,7 @@ public class SequentialFunctionChart
 
     private void addTransitionToSFC(Node node) {
         int id = Integer.parseInt(node.getAttributes().getNamedItem("localId").getNodeValue());
+        String condition = "";
         int source = -1;
 
         NodeList transitionChildren = node.getChildNodes();
@@ -66,15 +67,33 @@ public class SequentialFunctionChart
                         source = Integer.parseInt(connectionPointInChildren.item(k).getAttributes().getNamedItem("refLocalId").getNodeValue());
                     }
                 }
+            } else if (transitionChild.getNodeName().equals("condition")) {
+                NodeList conditionChildren = transitionChild.getChildNodes();
+                for (int k = 0; k < conditionChildren.getLength(); k++) {
+                    if (conditionChildren.item(k).getNodeName().equals("inline")) {
+                        for (int l = 0; l < conditionChildren.item(k).getChildNodes().getLength(); l++) {
+                            if (conditionChildren.item(k).getChildNodes().item(l).getNodeName().equals("ST")) {
+                                condition = conditionChildren.item(k).getChildNodes().item(l).getTextContent().trim();
+                                System.out.println("DUPA123: " + condition.trim());
+                            }
+                        }
+                    }
+                }
             }
         }
-        transitions.add(new Transition(id, source));
+        transitions.add(new Transition(id, condition, source));
     }
 
     private void addStepToSFC(Node node) {
-        steps.add(new Step(Integer.parseInt(node.getAttributes().getNamedItem("localId").getNodeValue()),
-                node.getAttributes().getNamedItem("name").getNodeValue(),
-                Boolean.parseBoolean(node.getAttributes().getNamedItem("initialStep").getNodeValue())));
+        int id = Integer.parseInt(node.getAttributes().getNamedItem("localId").getNodeValue());
+        String name = node.getAttributes().getNamedItem("name").getNodeValue();
+        boolean initialStep = Boolean.parseBoolean(node.getAttributes().getNamedItem("initialStep").getNodeValue());
+
+        if (initialStep) {
+            startSteps.add(new Step(id, name, true));
+        }
+
+        steps.add(new Step(id, name, initialStep));
     }
 
     private void addVarToSFC(Node node)
@@ -86,6 +105,10 @@ public class SequentialFunctionChart
     {
         System.out.println("Steps:");
         for (Step step : steps) {
+            System.out.println(step);
+        }
+        System.out.println("Start steps:");
+        for (Step step : startSteps) {
             System.out.println(step);
         }
         System.out.println("Transitions:");
