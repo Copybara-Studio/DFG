@@ -4,6 +4,7 @@
 package my.dfg;
 
 import my.dfg.extractor.*;
+import my.sfc.*;
 
 /**
  *
@@ -26,9 +27,12 @@ public class DFG
 //        }
 
         try {
-            Extractor ex = new Extractor("plc.xml");
-            ex.getTextFromFile();
-            ex.printVariables();
+//            Extractor ex = new Extractor("plc.xml");
+//            ex.getTextFromFile();
+//            ex.printTerms();
+            SequentialFunctionChart sfc = new SequentialFunctionChart();
+            sfc.readFromXML("plc.xml");
+            sfc.printSFC();
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }

@@ -15,6 +15,29 @@ import java.util.*;
  */
 public class Step
 {
+
+    private int id;
+    private String name;
+    private boolean initial_step;
     private boolean active;
     private Collection<Action> actions;
+
+    public Step(int id, String name, boolean initial_step, boolean active)
+    {
+        this.id = id;
+        this.name = name;
+        this.initial_step = initial_step;
+        this.active = false;
+    }
+
+    @Override
+    public String toString() {
+        return "Step{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", initial_step=" + initial_step +
+                ", active=" + active +
+                ", actions=" + actions +
+                '}';
+    }
 }

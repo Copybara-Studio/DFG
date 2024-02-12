@@ -4,6 +4,16 @@
  */
 package my.sfc;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -15,16 +25,81 @@ import java.util.*;
  */
 public class SequentialFunctionChart
 {
-    private Collection<Step> steps;
-    private Collection<Step> startSteps; // subset of 'steps'!
-    private Collection<Transition> transitions;
-    private Collection<Action> actions;
-    
-    public void readFromXML()
-    {
-        // ...
+    private Collection<Step> steps = new ArrayList<>();
+    private Collection<Step> startSteps = new ArrayList<>(); // subset of 'steps'!
+    private Collection<Transition> transitions = new ArrayList<>();
+    private Collection<Action> actions = new ArrayList<>();
+    private Collection<Variable> vars = new ArrayList<>();
+
+    public void readFromXML(String fileName) throws ParserConfigurationException, IOException, SAXException {
+        File file = new File(fileName);
+        System.out.println("File path : " + file.getAbsolutePath());
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document document = builder.parse(file);
+        document.getDocumentElement().normalize();
+        NodeList nodeList = document.getElementsByTagName("variable");
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            addVarToSFC(nodeList.item(i));
+        }
+        nodeList = document.getElementsByTagName("step");
+        for (int i = 0; i < nodeList.getLength(); i++) {
+//            addStepToSFC(nodeList.item(i));
+        }
+        nodeList = document.getElementsByTagName("transition");
+        for (int i = 0; i < nodeList.getLength(); i++) {
+//            addTransitionToSFC(nodeList, i);
+        }
     }
-    
+
+    private void addTransitionToSFC(NodeList nodeList, int i) {
+        Node node = nodeList.item(i);
+        int id = Integer.parseInt(node.getAttributes().getNamedItem("id").getNodeValue());
+        String name = node.getAttributes().getNamedItem("name").getNodeValue();
+        int source = -1;
+
+        Node transitionNode = nodeList.item(i);
+        NodeList transitionChildren = transitionNode.getChildNodes();
+        for (int j = 0; j < transitionChildren.getLength(); j++) {
+            Node transitionChild = transitionChildren.item(j);
+            if (transitionChild.getNodeName().equals("connectionPointIn")) {
+                NodeList connectionPointInChildren = transitionChild.getChildNodes();
+                for (int k = 0; k < connectionPointInChildren.getLength(); k++) {
+                    source = Integer.parseInt(connectionPointInChildren.item(k).getAttributes().getNamedItem("refLocalId").getNodeValue());
+                }
+            }
+        }
+        transitions.add(new Transition(id, name, source));
+    }
+
+    private void addStepToSFC(Node node) {
+        steps.add(new Step(Integer.parseInt(node.getAttributes().getNamedItem("id").getNodeValue()),
+                node.getAttributes().getNamedItem("name").getNodeValue(),
+                Boolean.parseBoolean(node.getAttributes().getNamedItem("initial_step").getNodeValue()),
+                Boolean.parseBoolean(node.getAttributes().getNamedItem("active").getNodeValue())));
+    }
+
+    private void addVarToSFC(Node node)
+    {
+        vars.add(new Variable(node.getAttributes().getNamedItem("name").getNodeValue()));
+    }
+
+    public void printSFC()
+    {
+        System.out.println("Steps:");
+        for (Step step : steps) {
+            System.out.println(step);
+        }
+        System.out.println("Transitions:");
+        for (Transition transition : transitions) {
+            System.out.println(transition);
+        }
+        System.out.println("Variables:");
+        for (Variable var : vars) {
+            System.out.println(var);
+        }
+    }
+
     /* Jakieś akcesory do treści tego SFC, żeby go przerobić na graf.
        W praniu wyjdzie. */
 }

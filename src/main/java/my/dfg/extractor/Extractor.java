@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import my.dfg.expression.*;
+
 public class Extractor {
     /**
      * The name of the file to extract data from.
@@ -21,7 +23,7 @@ public class Extractor {
     /**
      * The collection of variables extracted from the file.
      */
-    ArrayList<String> variablesCollection = new ArrayList<String>();
+    ArrayList<Term> termsCollection = new ArrayList<>();
 
 
     /**
@@ -49,16 +51,17 @@ public class Extractor {
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node = nodeList.item(i);
 //            System.out.println(node.getNodeName() + " with name: " + node.getAttributes().getNamedItem("name").getNodeValue());
-            variablesCollection.add(node.getAttributes().getNamedItem("name").getNodeValue());
+            termsCollection.add(new VariableTerm(node.getAttributes().getNamedItem("name").getNodeValue()));
         }
+        nodeList = document.getElementsByTagName("SFC");
     }
 
     /**
-     * Prints the variables extracted from the file.
+     * Prints the terms extracted from the file.
      */
-    public void printVariables() {
-        for (String variable : variablesCollection) {
-            System.out.println(variable);
+    public void printTerms() {
+        for (Term term : termsCollection) {
+            System.out.println(term.getType() + " with label: " + ((VariableTerm) term).getLabel());
         }
     }
 }

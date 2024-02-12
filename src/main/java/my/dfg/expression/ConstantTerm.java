@@ -17,7 +17,7 @@ public class ConstantTerm extends Term
     private final int value;
     
     /**
-     * Constructor. Sefl-explanatory.
+     * Constructor. Self-explanatory.
      * @param value the value
      */
     public ConstantTerm(int value)

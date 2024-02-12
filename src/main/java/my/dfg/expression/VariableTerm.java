@@ -21,7 +21,7 @@ public class VariableTerm extends Term
      * 
      * @param label the label
      */
-    protected VariableTerm(String label)
+    public VariableTerm(String label)
     {
         super(TermType.VARIABLE);
         this.label = label;

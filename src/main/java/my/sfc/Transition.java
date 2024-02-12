@@ -15,7 +15,27 @@ import java.util.*;
  */
 public class Transition
 {
-    private Collection<Step> inputSteps;
-    private Collection<Step> outputSteps;
+    private int id;
+    private String name;
+    private int source;
+//    private Collection<Step> inputSteps;
+//    private Collection<Step> outputSteps;
     private boolean condition;
+
+    public Transition(int id, String name, int source) {
+        this.id = id;
+        this.name = name;
+        this.source = source;
+        this.condition = false;
+    }
+
+    @Override
+    public String toString() {
+        return "Transition{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", source=" + source +
+                ", condition=" + condition +
+                '}';
+    }
 }
