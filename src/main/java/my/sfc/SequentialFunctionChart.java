@@ -44,39 +44,37 @@ public class SequentialFunctionChart
         }
         nodeList = document.getElementsByTagName("step");
         for (int i = 0; i < nodeList.getLength(); i++) {
-//            addStepToSFC(nodeList.item(i));
+            addStepToSFC(nodeList.item(i));
         }
         nodeList = document.getElementsByTagName("transition");
         for (int i = 0; i < nodeList.getLength(); i++) {
-//            addTransitionToSFC(nodeList, i);
+            addTransitionToSFC(nodeList.item(i));
         }
     }
 
-    private void addTransitionToSFC(NodeList nodeList, int i) {
-        Node node = nodeList.item(i);
-        int id = Integer.parseInt(node.getAttributes().getNamedItem("id").getNodeValue());
-        String name = node.getAttributes().getNamedItem("name").getNodeValue();
+    private void addTransitionToSFC(Node node) {
+        int id = Integer.parseInt(node.getAttributes().getNamedItem("localId").getNodeValue());
         int source = -1;
 
-        Node transitionNode = nodeList.item(i);
-        NodeList transitionChildren = transitionNode.getChildNodes();
+        NodeList transitionChildren = node.getChildNodes();
         for (int j = 0; j < transitionChildren.getLength(); j++) {
             Node transitionChild = transitionChildren.item(j);
             if (transitionChild.getNodeName().equals("connectionPointIn")) {
                 NodeList connectionPointInChildren = transitionChild.getChildNodes();
                 for (int k = 0; k < connectionPointInChildren.getLength(); k++) {
-                    source = Integer.parseInt(connectionPointInChildren.item(k).getAttributes().getNamedItem("refLocalId").getNodeValue());
+                    if (connectionPointInChildren.item(k).getNodeName().equals("refLocalId")) {
+                        source = Integer.parseInt(connectionPointInChildren.item(k).getAttributes().getNamedItem("refLocalId").getNodeValue());
+                    }
                 }
             }
         }
-        transitions.add(new Transition(id, name, source));
+        transitions.add(new Transition(id, source));
     }
 
     private void addStepToSFC(Node node) {
-        steps.add(new Step(Integer.parseInt(node.getAttributes().getNamedItem("id").getNodeValue()),
+        steps.add(new Step(Integer.parseInt(node.getAttributes().getNamedItem("localId").getNodeValue()),
                 node.getAttributes().getNamedItem("name").getNodeValue(),
-                Boolean.parseBoolean(node.getAttributes().getNamedItem("initial_step").getNodeValue()),
-                Boolean.parseBoolean(node.getAttributes().getNamedItem("active").getNodeValue())));
+                Boolean.parseBoolean(node.getAttributes().getNamedItem("initialStep").getNodeValue())));
     }
 
     private void addVarToSFC(Node node)

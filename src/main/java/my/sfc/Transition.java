@@ -22,9 +22,8 @@ public class Transition
 //    private Collection<Step> outputSteps;
     private boolean condition;
 
-    public Transition(int id, String name, int source) {
+    public Transition(int id, int source) {
         this.id = id;
-        this.name = name;
         this.source = source;
         this.condition = false;
     }
@@ -33,7 +32,6 @@ public class Transition
     public String toString() {
         return "Transition{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
                 ", source=" + source +
                 ", condition=" + condition +
                 '}';

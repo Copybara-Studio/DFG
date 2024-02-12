@@ -22,7 +22,7 @@ public class Step
     private boolean active;
     private Collection<Action> actions;
 
-    public Step(int id, String name, boolean initial_step, boolean active)
+    public Step(int id, String name, boolean initial_step)
     {
         this.id = id;
         this.name = name;
