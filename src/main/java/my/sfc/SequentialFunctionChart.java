@@ -30,8 +30,8 @@ public class SequentialFunctionChart
     private Collection<Transition> transitions = new ArrayList<>();
     private Collection<Action> actions = new ArrayList<>();
     private Collection<Variable> vars = new ArrayList<>(); // you can treat it as a map -> variables in transitions
-    private  Collection<Convergence> convergences = new ArrayList<>();
-    private  Collection<Divergence> divergences = new ArrayList<>();
+    private Collection<Convergence> convergences = new ArrayList<>();
+    private Collection<Divergence> divergences = new ArrayList<>();
 
     public void readFromXML(String fileName) throws ParserConfigurationException, IOException, SAXException
     {

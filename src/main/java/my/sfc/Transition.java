@@ -18,8 +18,8 @@ public class Transition
     private int id;
     private String name;
     private int source;
-//    private Collection<Step> inputSteps;
-//    private Collection<Step> outputSteps;
+    private Collection<Step> inputSteps;
+    private Collection<Step> outputSteps;
     private String condition;
 
     public Transition(int id, String condition, int source) {

@@ -15,7 +15,6 @@ import java.util.*;
  */
 public class Step
 {
-
     private int id;
     private String name;
     private boolean initialStep;
