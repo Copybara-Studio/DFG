@@ -20,7 +20,7 @@ public class WritingNode extends Node
     public void setVariable(Variable newVariable)
     {
         variable = newVariable;
-        //variable.setWriter(this);
+        variable.setWriter(this);
     }
     
     @Deprecated

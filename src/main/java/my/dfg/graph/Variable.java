@@ -24,16 +24,13 @@ public class Variable
         return value;
     }
     
-//    public void setReader(ReadingNode node)
-//    {
-//        reader = node;
-//        // (This shall be the variable of the node.)
-//    }
-//    
-//    public void setWriter(WritingNode node)
-//    {
-//        writer = node;
-//        node.setVariable(this);
-//        // (This shall be the variable of the node.)
-//    }
+    public void setReader(ReadingNode node)
+    {
+        reader = node;
+    }
+    
+    public void setWriter(WritingNode node)
+    {
+        writer = node;
+    }
 }

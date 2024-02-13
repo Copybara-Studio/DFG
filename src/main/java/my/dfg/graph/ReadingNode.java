@@ -20,7 +20,7 @@ public class ReadingNode extends Node
     public void setVariable(Variable newVariable)
     {
         variable = newVariable;
-        //variable.setReader(this);
+        variable.setReader(this);
     }
     
     @Override
