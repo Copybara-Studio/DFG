@@ -11,23 +11,27 @@ import java.util.Collection;
  *
  * @author Kay Jay O'Nail
  */
-public class Convergence
+public class Convergence extends Component
 {
-    private int id;
     private Collection<Integer> sources;
     //private Collection<Step> inputSteps;
     //private Step outputStep;
 
-    public Convergence(int id, Collection<Integer> sources) {
-        this.id = id;
+    public Convergence(int id, Collection<Integer> sources)
+    {
+        super(id, ComponentType.CONVERGENCE);
         this.sources = sources;
     }
 
     @Override
-    public String toString() {
-        return "Convergence{" +
-                "id=" + id +
-                ", inputSteps=" + sources +
-                '}';
+    public String toString()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.append(super.toString());
+        builder.append(":[sources=");
+        
+        // tu trzeba by dopisać elementy 'sources'
+        
+        return builder.toString();
     }
 }
